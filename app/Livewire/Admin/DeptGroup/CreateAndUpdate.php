@@ -13,7 +13,7 @@ use Livewire\Attributes\Validate;
 class CreateAndUpdate extends Component
 {
     #[Validate]
-    public $modal = 'modal', $group_id, $department_name_id, $deptGroup_id, $divider;
+    public $modal = 'modal', $group_id, $department_id, $deptGroup_id, $divider;
 
     #[On('deptGroup_updated')]
     public function updateDeptGroup_updated($id)
@@ -22,7 +22,7 @@ class CreateAndUpdate extends Component
             $this->deptGroup_id = $id;
             $DeptGroup = DeptGroup::whereId($id)->first();
             $this->group_id = $DeptGroup->group_id;
-            $this->department_name_id = $DeptGroup->department_name_id;
+            $this->department_id = $DeptGroup->department_id;
             $this->modal = 'modal modal-open';
             $this->divider = 'Update Department Group';
         }
@@ -38,7 +38,14 @@ class CreateAndUpdate extends Component
     {
         return [
             'group_id' => ['required'],
-            'department_name_id' => ['required',]
+            'department_id' => ['required',]
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'group_id.required' => 'The Group Name fild is required.',
+            'department_id.required' => 'The Department Name fild is required.',
         ];
     }
     public function store()
@@ -48,18 +55,39 @@ class CreateAndUpdate extends Component
             ['id' => $this->deptGroup_id],
             [
                 'group_id' => $this->group_id,
-                'department_name_id' => $this->department_name_id,
+                'department_id' => $this->department_id,
 
             ]
         );
         if ($this->deptGroup_id) {
-            Session::flash('success', 'Data has been updated!!');
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data has been updated",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
         } else {
-            Session::flash('success', 'Data added Successfully!!');
-        }
 
-        $this->emptyFilds();
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data added Successfully!!",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+            $this->emptyFilds();
+        }
         $this->dispatch('deptGroup_created');
+
     }
     public function openModal()
     {
@@ -68,11 +96,12 @@ class CreateAndUpdate extends Component
     }
     public function closeModal()
     {
+        $this->emptyFilds();
         $this->modal = 'modal';
     }
     public function emptyFilds()
     {
         $this->reset('group_id');
-        $this->reset('department_name_id');
+        $this->reset('department_id');
     }
 }

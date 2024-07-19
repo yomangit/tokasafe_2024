@@ -13,10 +13,23 @@ class Group extends Model
     public function scopeSearchGroup($query, $term)
     {
 
-        $query->where('group_name', 'LIKE', '%' . $term . '%');
+        $query->when(
+            $term ?? false,
+            fn ($query, $term) => $query->where('group_name', 'LIKE', '%' . $term . '%')
+        );
+    }
+    public function scopeSearchDept($query, $term)
+    {
+        $query->when(
+            $term ?? false,
+            fn ($query, $term) =>
+            $query->whereHas('Dept', function ($q) use ($term) {
+                $q->where('department_name', 'like', '%' . $term . '%');
+            })
+        );
     }
     public function Dept()
     {
-        return $this->belongsToMany(Department::class, 'dept_groups', );
+        return $this->belongsToMany(Department::class, 'dept_groups',);
     }
 }

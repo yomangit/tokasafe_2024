@@ -30,15 +30,15 @@
                     <x-label-error :messages="$errors->get('group_id')" />
                 </div>
                 <div class="w-full max-w-xs sm:max-w-sm xl:max-w-xl form-control">
-                    <x-label-req :value="__('Company Category')" />
-                    <x-select wire:model='department_name_id' :error="$errors->get('department_name_id')">
+                    <x-label-req :value="__('Department')" />
+                    <x-select wire:model='department_id' :error="$errors->get('department_id')">
                         <option value="" selected>Select an option</option>
                         @foreach ($Department as $dept)
                             <option value="{{ $dept->id }}">
                                 {{ $dept->department_name }}</option>
                         @endforeach
                     </x-select>
-                    <x-label-error :messages="$errors->get('department_name_id')" class="mt-0" />
+                    <x-label-error :messages="$errors->get('department_id')" class="mt-0" />
                 </div>
                 <div>
 

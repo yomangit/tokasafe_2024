@@ -41,8 +41,35 @@ class CreateAndUpdate extends Component
             ['id' => $this->group_id],
             ['group_name' => $this->group_name]
         );
-        $this->reset('group_name');
+        if ($this->group_id) {
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data has been updated",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+        } else {
+
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data added Successfully!!",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+            $this->reset('group_name');
+        }
         $this->dispatch('group_created');
+      
     }
 
     public function openModal()
@@ -53,5 +80,7 @@ class CreateAndUpdate extends Component
     public function closeModal()
     {
         $this->modal = 'modal';
+        $this->reset('group_name');
+        $this->reset('group_id');
     }
 }

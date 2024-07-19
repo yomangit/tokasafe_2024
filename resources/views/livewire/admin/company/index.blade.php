@@ -1,4 +1,5 @@
 <div>
+    <x-notification />
     <div class="flex flex-col sm:flex-row sm:justify-between ">
         <div> @livewire('admin.company.create-and-update') </div>
         <div>

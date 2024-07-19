@@ -1,7 +1,8 @@
 <div>
+    <x-notification />
     <div class="flex flex-col sm:flex-row sm:justify-between ">
         <div> @livewire('admin.business-unit.create-and-update') </div>
-
+        <x-inputsearch name='search' wire:model.live='search' />
     </div>
     <div class="overflow-x-auto">
         <table class="table table-zebra table-xs">

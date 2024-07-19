@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('toastify/css/toastify.css') }}">
+    @stack('styles')
     @if (isset($title))
         <title>{{ $title }}</title>
     @endif
@@ -22,7 +23,7 @@
             <input id="my-drawer" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
                 <main>
-                    <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8 ">
+                    <div class="px-4 py-6 mx-auto  sm:px-6 lg:px-8 ">
 
                         @yield('content')
 
@@ -37,6 +38,7 @@
 
     {{-- Skrips --}}
     <script type="text/javascript" src="{{ asset('toastify/js/toastify.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>

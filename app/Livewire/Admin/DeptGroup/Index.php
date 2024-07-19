@@ -11,24 +11,38 @@ use Livewire\WithPagination;
 class Index extends Component
 {
     use WithPagination;
-    public $search_group = '';
-    public $search_dept = '';
-    protected $listeners = ['company_created' => 'render'];
+    public $search = '';
+    protected $listeners = [
+        'deptGroup_created' => 'render',
+        'group_created' => 'render'
+    ];
     public function render()
     {
         return view('livewire.admin.dept-group.index', [
-            'Group' => Group::searchGroup(trim($this->search_group))->paginate(10),
+            'Group' => Group::with('Dept')->searchGroup(trim($this->search_group))->searchDept(trim($this->search_dept))->paginate(10),
             'Department' => Department::get(),
-        ])->extends('base.index', ['header' => 'Group Department', 'title' => 'Group Department'])->section('content');
+        ])->extends('base.index', ['header' => 'Department Group ', 'title' => 'Department Group'])->section('content');
     }
-    public function updateData($id)
+    public function editDeptGroup($idGroup, $idDept)
     {
-
+        $id = DeptGroup::where('group_id', $idGroup)->where('department_id', $idDept)->first()->id;
         $this->dispatch('deptGroup_updated', $id);
     }
-    public function delete($id)
+    public function deleteDeptGroup($idGroup, $idDept)
     {
+        $id = DeptGroup::where('group_id', $idGroup)->where('department_id', $idDept)->first()->id;
         $deleteFile = DeptGroup::whereId($id);
+        $this->dispatch(
+            'alert',
+            [
+                'text' => "Deleted Data Successfully!!",
+                'duration' => 3000,
+                'destination' => '/contact',
+                'newWindow' => true,
+                'close' => true,
+                'backgroundColor' => "linear-gradient(to right, #f97316, #ef4444)",
+            ]
+        );
         $deleteFile->delete();
     }
 

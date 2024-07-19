@@ -16,7 +16,7 @@ class Index extends Component
     {
         return view('livewire.admin.business-unit.index', [
             'Company' => Company::get(),
-            'BusinessUnit' => BusinesUnit::search(trim($this->search))->paginate(20)
+            'BusinessUnit' => BusinesUnit::with('Company')->search(trim($this->search))->paginate(20)
         ])->extends('base.index', ['header' => 'Business Unit', 'title' => 'Business Unit'])->section('content');
     }
     public function updateData($id)
@@ -27,6 +27,17 @@ class Index extends Component
     public function delete($id)
     {
         $deleteFile = BusinesUnit::whereId($id);
+        $this->dispatch(
+            'alert',
+            [
+                'text' => "Deleted Data Successfully!!",
+                'duration' => 3000,
+                'destination' => '/contact',
+                'newWindow' => true,
+                'close' => true,
+                'backgroundColor' => "linear-gradient(to right, #f97316, #ef4444)",
+            ]
+        );
         $deleteFile->delete();
     }
 

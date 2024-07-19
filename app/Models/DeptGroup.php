@@ -11,7 +11,7 @@ class DeptGroup extends Model
     protected $table = 'dept_groups';
     protected $fillable = [
         'group_id',
-        'department_name_id',
+        'department_id',
     ];
     public function scopeSearchGroup($query, $term)
     {
@@ -28,12 +28,5 @@ class DeptGroup extends Model
         });
     }
 
-    public function Group()
-    {
-        return $this->belongsTo(Group::class, 'group_id');
-    }
-    public function Department()
-    {
-        return $this->belongsTo(Department::class, 'department_name_id');
-    }
+
 }

@@ -28,15 +28,15 @@
                 </li>
                 <li>
                     <details>
-                        <summary class="{{ Request::is('admin*') ? ' text-[#fca311] font-semibold' : '' }}">
+                        <summary class="{{ Request::is('admin*') ? ' text-primary-muted font-semibold' : '' }}">
                             Administrator</summary>
-                        <ul class="p-1 w-44 bg-neutral menu menu-xs">
+                        <ul class="p-1 w-52 bg-neutral menu menu-xs">
 
 
                             <li>
                                 <details open>
                                     <summary
-                                        class="{{ Request::is('admin/parent/*') ? ' text-[#fca311] font-semibold' : '' }}">
+                                        class="{{ Request::is('admin/parent/*') ? ' text-primary-muted font-semibold' : '' }}">
                                         Parent</summary>
                                     <ul>
                                         <li><a
@@ -53,6 +53,33 @@
                                         </li>
                                         <li><a
                                                 href="{{ route('deptGroup') }}"class="{{ Request::is('admin/parent/deptGroup') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Dept Group ') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('subContDept') }}"class="{{ Request::is('admin/parent/subContDept') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Sub-Cont Department') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('DeptByBU') }}"class="{{ Request::is('admin/parent/DeptByBU') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Dept Under Business Unit') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('JobClass') }}"class="{{ Request::is('admin/parent/JobClass') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Job Class') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('workgroup') }}"class="{{ Request::is('admin/parent/workgroup') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Workgroup') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('statusEvent') }}"class="{{ Request::is('admin/parent/statusEvent') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Status Event') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('riskConsequence') }}"class="{{ Request::is('admin/parent/riskConsequence') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Risk Consequence') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('riskAssessment') }}"class="{{ Request::is('admin/parent/riskAssessment') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Risk Assessment') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('riskLikelihood') }}"class="{{ Request::is('admin/parent/riskLikelihood') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Risk Likelihood') }}</a>
+                                        </li>
+                                        <li><a
+                                                href="{{ route('tableRiskAssessment') }}"class="{{ Request::is('admin/parent/tableRiskAssessment') ? 'active text-emerald-500 font-semibold' : '' }}">{{ __('Table Risk') }}</a>
                                         </li>
                                     </ul>
                                 </details>
@@ -89,7 +116,7 @@
     </div>
     @if (isset($header))
         <header class="bg-white shadow">
-            <div class="px-3 mx-auto max-w-7xl sm:px-5 lg:px-7">
+            <div class="px-3 mx-auto  sm:px-5 lg:px-7">
                 <h1 class="text-sm font-bold tracking-tight text-gray-900">{{ $header }}
                 </h1>
             </div>

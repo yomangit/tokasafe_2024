@@ -44,8 +44,35 @@ class CreateAndUpdate extends Component
 
             ]
         );
-        $this->reset('name_company_id');
+        if ($this->business_unit_id) {
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data has been updated",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+        } else {
+
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data added Successfully!!",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+            $this->reset('name_company_id');
+        }
         $this->dispatch('b_unit_created');
+       
     }
     public function openModal()
     {
@@ -54,6 +81,8 @@ class CreateAndUpdate extends Component
     }
     public function closeModal()
     {
+        $this->reset('name_company_id');
+        $this->reset('business_unit_id');
         $this->modal = 'modal';
     }
 }

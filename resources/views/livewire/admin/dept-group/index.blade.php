@@ -1,19 +1,15 @@
 <div>
+    <x-notification />
     <div role="tablist" class="tabs tabs-lifted">
-        <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="Tab 1" checked />
+        <input type="radio" name="my_tabs_2" role="tab" class="tab font-semibold" aria-label="Department Group"
+            checked />
         <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
             <div class="flex flex-col sm:flex-row sm:justify-between ">
                 <div> @livewire('admin.dept-group.create-and-update') </div>
                 <div>
-                    <div class="flex flex-col sm:flex-row">
-                        <x-select-search wire:model.live='search_dept'>
-                            <option class="opacity-40" value="" selected>Select All</option>
-                            @foreach ($Group as $groups)
-                                <option value="{{ $groups->group_name }}">
-                                    {{ $groups->group_name }}
-                                </option>
-                            @endforeach
-                        </x-select-search>
+                    {{-- <div class="flex flex-col sm:flex-row">
+
+                        <x-inputsearch name='search' wire:model.live='search_group' />
                         <x-select-search wire:model.live='search_dept'>
                             <option class="opacity-40" value="" selected>Select All</option>
                             @foreach ($Department as $dept)
@@ -22,7 +18,7 @@
                                 </option>
                             @endforeach
                         </x-select-search>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
@@ -32,51 +28,53 @@
                     <thead>
                         <tr class="text-center">
                             <th>#</th>
-                            <th>Group</th>
-                            <th>Department</th>
-                            <th>Action</th>
+                            <th class="font-extrabold">Group</th>
+                            <th class="font-extrabold">Department</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- row 1 -->
                         @forelse ($Group as $no => $cc)
-                            <tr class="text-center">
-                                <th>{{ $Group->firstItem() + $no }}</th>
-                                <td>{{ $cc->group_name }}</td>
-                                <td>
+                            <tr>
+                                <th class="text-center">{{ $Group->firstItem() + $no }}</th>
+                                <td class="text-center font-bold">{{ $cc->group_name }}</td>
+                                <td >
+                                   
                                     @foreach ($cc->Dept()->get() as $dept)
-                                        {{ $dept->department_name }}
+                                      <div class="grid grid-cols-2  items-center hover:bg-slate-300">
+
+                                          <div class=" text-right font-semibold m-1">
+                                              {{ $dept->department_name }}
+                                          </div>
+                                          <div class="m-1">
+                                              <label class="btn btn-xs btn-square btn-warning"
+                                                  wire:click="editDeptGroup({{$cc->id}}, {{$dept->id}})">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                      fill="currentColor" class="size-4">
+                                                      <path
+                                                          d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z" />
+                                                      <path
+                                                          d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z" />
+                                                  </svg>
+                                              </label>
+                                              <label class="btn btn-xs btn-square btn-error"
+                                               wire:confirm.prompt="Are you sure delete {{ $dept->department_name }}?\n\nType DELETE to confirm|DELETE"
+                                                  wire:click="deleteDeptGroup({{$cc->id}}, {{$dept->id}})">
+                                                  
+                                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"
+                                                      fill="currentColor" class="size-4">
+                                                      <path fill-rule="evenodd"
+                                                          d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z"
+                                                          clip-rule="evenodd" />
+                                                  </svg>
+
+                                              </label>
+
+                                          </div>
+                                      </div>
                                     @endforeach
                                 </td>
-                                <td>
-                                    <div class="">
-                                        <label
-                                            class="btn btn-xs btn-square btn-warning tooltip tooltip-top tooltip-warning"
-                                            wire:click="updateData({{ $cc->id }})" data-tip="Update">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" class="size-6">
-                                                <path
-                                                    d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                                                <path
-                                                    d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                                            </svg>
 
-
-                                        </label>
-                                        <label class="btn btn-xs btn-square btn-error tooltip tooltip-top tooltip-error"
-                                            wire:click="delete({{ $cc->id }})"
-                                            wire:confirm.prompt="Are you sure delete {{ $cc->name_company }}?\n\nType DELETE to confirm|DELETE"
-                                            data-tip="Delete">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                fill="currentColor" class="size-6">
-                                                <path fill-rule="evenodd"
-                                                    d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
-
-                                        </label>
-                                    </div>
-                                </td>
                             </tr>
                         @empty
                             <tr class="text-center">
@@ -89,7 +87,7 @@
             </div>
         </div>
 
-        <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="Tab 2" />
+        <input type="radio" name="my_tabs_2" role="tab" class="tab font-semibold" aria-label="Group" />
         <div role="tabpanel" class="p-6 tab-content bg-base-100 border-base-300 rounded-box">
             @livewire('admin.group.index')
         </div>

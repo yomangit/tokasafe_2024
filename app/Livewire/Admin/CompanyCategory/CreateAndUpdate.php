@@ -41,8 +41,35 @@ class CreateAndUpdate extends Component
             ['id' => $this->company_category_id],
             ['name_category_company' => $this->name_category_company]
         );
-        $this->reset('name_category_company');
+        if ($this->company_category_id) {
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data has been updated",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+        } else {
+
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data added Successfully!!",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+            $this->reset('name_category_company');
+        }
         $this->dispatch('companyCategory_created');
+       
     }
 
     public function openModal()
@@ -52,6 +79,8 @@ class CreateAndUpdate extends Component
     }
     public function closeModal()
     {
+        $this->reset('name_category_company');
+        $this->reset('company_category_id');
         $this->modal = 'modal';
     }
 }

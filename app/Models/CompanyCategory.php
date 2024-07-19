@@ -13,6 +13,8 @@ class CompanyCategory extends Model
     public function scopeSearchFor($query, $term)
     {
 
-        $query->where('name_category_company', 'LIKE', '%' . $term . '%');
+        $query->when(
+            $term ?? false,
+            fn ($query, $term) =>$query->where('name_category_company', 'LIKE', '%' . $term . '%'));
     }
 }

@@ -29,6 +29,17 @@ class Index extends Component
     public function delete($id)
     {
         $deleteFile = CompanyCategory::whereId($id);
+        $this->dispatch(
+            'alert',
+            [
+                'text' => "Deleted Data Successfully!!",
+                'duration' => 3000,
+                'destination' => '/contact',
+                'newWindow' => true,
+                'close' => true,
+                'backgroundColor' => "linear-gradient(to right, #f97316, #ef4444)",
+            ]
+        );
         $deleteFile->delete();
     }
 

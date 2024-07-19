@@ -41,7 +41,33 @@ class CreateAndUpdate extends Component
             ['id' => $this->department_id],
             ['department_name' => $this->department_name]
         );
-        $this->reset('department_name');
+        if ($this->department_id) {
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data has been updated",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+        } else {
+
+            $this->dispatch(
+                'alert',
+                [
+                    'text' => "Data added Successfully!!",
+                    'duration' => 3000,
+                    'destination' => '/contact',
+                    'newWindow' => true,
+                    'close' => true,
+                    'backgroundColor' => "linear-gradient(to right, #00b09b, #96c93d)",
+                ]
+            );
+            $this->reset('department_name');
+        }
         $this->dispatch('department_created');
     }
 
@@ -52,6 +78,8 @@ class CreateAndUpdate extends Component
     }
     public function closeModal()
     {
+        $this->reset('department_id');
+        $this->reset('department_name');
         $this->modal = 'modal';
     }
 }

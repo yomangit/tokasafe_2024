@@ -14,13 +14,20 @@ class BusinesUnit extends Model
     ];
     public function scopeSearch($query, $term)
     {
-
-        $query->whereHas('Company', function ($q) use ($term) {
-            $q->where('name_company', 'like', '%' . $term . '%');
-        });
+        $query->when(
+            $term ?? false,
+            fn ($query, $term) =>
+            $query->whereHas('Company', function ($q) use ($term) {
+                $q->where('name_company', 'like', '%' . $term . '%');
+            })
+        );
     }
     public function Company()
     {
         return $this->belongsTo(Company::class, 'name_company_id');
+    }
+    public function Department()
+    {
+        return $this->belongsToMany(Department::class, 'dept_by_business_units');
     }
 }

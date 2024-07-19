@@ -5,6 +5,13 @@ module.exports = {
         "./resources/**/*.js",
         "./resources/**/*.vue",
     ],
+    safelist: [
+        'bg-green-500',
+        'bg-teal-500',
+        'bg-yellow-500',
+        'bg-sky-500',
+        'bg-rose-500'
+      ],
     daisyui: {
         themes: [
             {
@@ -17,6 +24,7 @@ module.exports = {
                             color: "#000000",
                         },
                     "--base-400": "25.2% 0.056 264.00",
+                    "--primary-muted": "78.6% 0.167 70.04",
                 },
             },
             // light theme
@@ -25,15 +33,16 @@ module.exports = {
                     ...require("daisyui/src/theming/themes")["light"],
                     "--primary-muted": "78.6% 0.167 70.04",
                     "--base-400": "25.2% 0.056 264.00",
+                    "--primary-muted": "78.6% 0.167 70.04",
                 },
             },
-
             // dark theme
             {
                 dark: {
                     ...require("daisyui/src/theming/themes")["dark"],
                     "--primary-muted": "78.6% 0.167 70.04",
                     "--base-400": "25.2% 0.056 264.00",
+                    "--primary-muted": "78.6% 0.167 70.04",
                 },
             },
             "light",
